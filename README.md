@@ -75,6 +75,9 @@ services:
 
 # netboot.xyz setup
 
+- Create [bootable Windows PE media](https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-create-usb-bootable-drive?view=windows-11) and extract iso into win-install
+- Download and extract win10/11 iso accordingly
+
 Copy the files accordingly
 ```
 netbootxyz
@@ -91,6 +94,7 @@ netbootxyz
 	│       ├── HBCD_PE_x64
 	│       ├── live11
 	│       └── win-install
+	│               ├──(extracted windows PE)
 
 ```
 Edit boot.cfg and windows.ipxe accordingly
