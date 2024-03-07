@@ -94,7 +94,7 @@ netbootxyz
 	│       ├── HBCD_PE_x64
 	│       ├── live11
 	│       └── win-install
-	│               ├──(extracted windows PE)
+	│               ├──(extracted WinPE_amd64.iso)
 
 ```
 Edit boot.cfg and windows.ipxe accordingly
