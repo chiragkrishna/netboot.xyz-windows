@@ -1,0 +1,109 @@
+#!ipxe
+
+# Microsoft Windows
+# https://www.microsoft.com
+
+set win_arch x64
+goto ${menu} ||
+
+:windows
+set os Microsoft Windows
+clear win_version
+menu ${os} 
+item --gap Installers
+item win10_install ${space} Windows 10 Install
+item win11_install ${space} Windows 11 Install
+item hiren_win ${space} Hirens Windows Rescue
+item live11 ${space} ${os} Windows 11 Live
+choose win_version || goto windows_exit
+goto ${win_version}
+
+:arch_set
+iseq ${win_arch} x64 && set win_arch x86 || set win_arch x64
+goto windows
+
+:url_set
+echo Set the HTTP URL of an extracted Windows ISO without the trailing slash:
+echo e.g. http://www.mydomain.com/windows
+echo
+echo -n URL: ${} && read win_base_url
+echo
+echo netboot.xyz will attempt to load the following files:
+echo ${win_base_url}/bootmgr
+echo ${win_base_url}/bootmgr.efi
+echo ${win_base_url}/boot/bcd
+echo ${win_base_url}/boot/boot.sdi
+echo ${win_base_url}/sources/boot.wim
+echo
+prompt Press any key to return to Windows Menu...
+goto windows
+
+prompt Press any key to return to Windows Menu...
+goto windows
+
+:win10_install
+isset ${win_base_url} && goto win10_boot || echo URL not set... && goto url_set
+
+:win11_install
+isset ${win_base_url} && goto win11_boot || echo URL not set... && goto url_set
+
+:hiren_win
+isset ${win_base_url} && goto hiren_boot || echo URL not set... && goto url_set
+
+:live11
+isset ${win_base_url} && goto live_boot || echo URL not set... && goto url_set
+
+:win10_boot
+imgfree
+kernel http://${boot_domain}/wimboot
+initrd ${win10}/auto10.bat auto10.bat ||
+initrd ${win10}/winpeshl.ini winpeshl.ini ||
+initrd -n bootmgr        ${win_base_url}/bootmgr       bootmgr ||
+initrd -n bootmgr.efi    ${win_base_url}/bootmgr.efi   bootmgr.efi ||      
+initrd -n bcd            ${win_base_url}/boot/bcd      bcd ||
+initrd -n bcd            ${win_base_url}/Boot/BCD      bcd ||
+initrd -n boot.sdi       ${win_base_url}/boot/boot.sdi boot.sdi ||
+initrd -n boot.sdi       ${win_base_url}/Boot/boot.sdi boot.sdi ||
+initrd -n boot.wim       ${win_base_url}/sources/boot.wim boot.wim
+boot
+
+:win11_boot
+imgfree
+kernel http://${boot_domain}/wimboot
+initrd ${win11}/auto11.bat auto11.bat ||
+initrd ${win11}/winpeshl.ini winpeshl.ini ||
+initrd -n bootmgr        ${win_base_url}/bootmgr       bootmgr ||
+initrd -n bootmgr.efi    ${win_base_url}/bootmgr.efi   bootmgr.efi ||      
+initrd -n bcd            ${win_base_url}/boot/bcd      bcd ||
+initrd -n bcd            ${win_base_url}/Boot/BCD      bcd ||
+initrd -n boot.sdi       ${win_base_url}/boot/boot.sdi boot.sdi ||
+initrd -n boot.sdi       ${win_base_url}/Boot/boot.sdi boot.sdi ||
+initrd -n boot.wim       ${win_base_url}/sources/boot.wim boot.wim
+boot
+
+:hiren_boot
+imgfree
+kernel http://${boot_domain}/wimboot
+initrd -n bootmgr     ${HBCD_PE_x64}/bootmgr       bootmgr ||
+initrd -n bootmgr.efi ${HBCD_PE_x64}/bootmgr.efi   bootmgr.efi ||      
+initrd -n bcd         ${HBCD_PE_x64}/boot/bcd      bcd ||
+initrd -n bcd         ${HBCD_PE_x64}/Boot/BCD      bcd ||
+initrd -n boot.sdi    ${HBCD_PE_x64}/boot/boot.sdi boot.sdi ||
+initrd -n boot.sdi    ${HBCD_PE_x64}/Boot/boot.sdi boot.sdi ||
+initrd -n boot.wim    ${HBCD_PE_x64}/sources/boot.wim boot.wim
+boot
+
+:live_boot
+imgfree
+kernel http://${boot_domain}/wimboot
+initrd -n bootmgr     ${live11}/bootmgr       bootmgr ||
+initrd -n bootmgr.efi ${live11}/bootmgr.efi   bootmgr.efi ||      
+initrd -n bcd         ${live11}/boot/bcd      bcd ||
+initrd -n bcd         ${live11}/Boot/BCD      bcd ||
+initrd -n boot.sdi    ${live11}/boot/boot.sdi boot.sdi ||
+initrd -n boot.sdi    ${live11}/Boot/boot.sdi boot.sdi ||
+initrd -n boot.wim    ${live11}/sources/boot.wim boot.wim
+boot
+
+:windows_exit
+exit 0
