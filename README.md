@@ -101,4 +101,4 @@ Edit boot.cfg and windows.ipxe accordingly
 
 
 -----
-thanks to [@technotim](https://technotim.live/posts/netbootxyz-tutorial/) for his amazing tutorials
+thanks to [@TechnoTim](https://github.com/techno-tim) for his amazing [tutorial](https://technotim.live/posts/netbootxyz-tutorial/)
