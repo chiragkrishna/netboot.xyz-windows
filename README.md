@@ -98,3 +98,7 @@ netbootxyz
 
 ```
 Edit boot.cfg and windows.ipxe accordingly
+
+
+-----
+thanks to [@technotim](https://technotim.live/posts/netbootxyz-tutorial/) for his amazing tutorials
