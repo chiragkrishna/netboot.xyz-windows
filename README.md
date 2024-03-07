@@ -76,7 +76,7 @@ services:
 # netboot.xyz setup
 
 - Create [bootable Windows PE media](https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-create-usb-bootable-drive?view=windows-11) and extract iso into win-install
-- Download and extract win10/11 iso accordingly
+- Download win10/11 and extract iso accordingly
 
 Copy the files accordingly
 ```
